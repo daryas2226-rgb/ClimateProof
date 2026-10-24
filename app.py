@@ -48,14 +48,6 @@ if len(chart):
 else:
     st.warning('No finite readings with valid timestamps to plot.')
 st.subheader('Review the records')
-st.caption(
-    f"Invalid timestamps: {report['counts']['invalid_timestamp']} · "
-    f"Invalid readings: {report['counts']['invalid_measurement']} · "
-    f"Repeated timestamps: {report['counts']['duplicate_timestamp']} · "
-    f"Outside bounds: {report['counts']['outside_user_bounds']} · "
-    f"Statistical outliers: {report['counts']['statistical_outlier']}"
-)
-st.caption('A record can have several flags. Records to review counts each record once.')
 st.dataframe(output, width='stretch')
 st.download_button('Download reviewed CSV', output.to_csv(index=False).encode('utf-8'), 'climateproof_flagged.csv', 'text/csv')
 st.subheader('File integrity')

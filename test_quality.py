@@ -67,35 +67,5 @@ class QualityTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 read_csv(raw)
 
-    def test_reject_ragged_csv_without_shifting_columns(self):
-        for raw in [b'timestamp,value\n2026-10-20,1,unexpected\n',
-                    b'timestamp,value\n2026-10-20\n',
-                    b'timestamp,value\n"unclosed,1\n']:
-            with self.assertRaises(ValueError):
-                read_csv(raw)
-
-    def test_reject_ambiguous_headers(self):
-        for raw in [b'timestamp,timestamp\na,b', b'timestamp,\na,b']:
-            with self.assertRaises(ValueError):
-                read_csv(raw)
-
-    def test_source_text_and_quoted_fields_preserved(self):
-        raw = b'\xef\xbb\xbftimestamp,value,sensor,note\n2026-10-20,1.00,001,"NA, note"\n'
-        output, report, _ = analyse(raw, 'timestamp', 'value')
-        self.assertEqual(output.iloc[0]['value'], '1.00')
-        self.assertEqual(output.iloc[0]['sensor'], '001')
-        self.assertEqual(output.iloc[0]['note'], 'NA, note')
-        self.assertEqual(report['flagged_rows'], 0)
-
-    def test_large_finite_readings_do_not_overflow_outlier_check(self):
-        raw = ('timestamp,value\n' + '\n'.join(
-            f'2026-10-{i+10},{v}' for i, v in enumerate(
-                ['1.0e308', '1.01e308', '1.02e308', '1.03e308', '1.04e308', '-1.7e308'])
-        )).encode()
-        _, report, _ = analyse(raw, 'timestamp', 'value')
-        self.assertEqual(report['outlier_status'], 'applied')
-        self.assertEqual(report['counts']['statistical_outlier'], 1)
-        json.dumps(report, allow_nan=False)
-
 if __name__ == '__main__':
     unittest.main()

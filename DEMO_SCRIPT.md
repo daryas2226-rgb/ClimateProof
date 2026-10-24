@@ -1,60 +1,18 @@
-# ClimateProof demo narration
+# ClimateProof — 3:35 screen-demo script
+Use the real running app. Sample values are explicitly synthetic. Do not show personal files, account details, or a fabricated deployment.
 
-English narration synthesized offline with Microsoft Zira. Visuals show the actual running Streamlit app and explanatory cards. No paid services or artificial sensor footage.
+**0:00–0:25 · Problem.** “Before environmental data supports a decision, someone has to review it. Missing readings, repeated timestamps and unusual values can be hidden in a simple spreadsheet. ClimateProof is a transparent review prototype for the Climate Data and Environmental Monitoring track.”
 
-## ClimateProof
+**0:25–0:55 · Input.** Show the sample mode and its synthetic-data label. “This example is synthetic temperature data. The app starts with a sample, or the user uploads one sensor's CSV and selects timestamp and measurement columns. Timestamps without an offset are assumed to be UTC.”
 
-ClimateProof is a working prototype for reviewing environmental observation files before they are shared or used in analysis. It combines transparent quality checks with a SHA two fifty-six file fingerprint, in a small Streamlit application.
+**0:55–1:35 · Review.** Show metrics, chart and table. “There are nine records. Four need review: an extreme reading, two records sharing a timestamp, and a missing value. We count flagged records once, even when a row has several flags. A flag is a reason to investigate, not proof that a sensor is faulty.”
 
-## A practical trust problem
+**1:35–2:05 · Bounds.** Open physical range, enable 0–40. “A reviewer who knows the measurement and unit can set physical bounds. The extreme value is now also outside those bounds. The total remains four, because we do not double-count it. Statistical flags use median absolute deviation; the test is skipped for small or constant samples.”
 
-A sensor spreadsheet may contain missing readings, repeated timestamps, or unusual values. Those problems need to be visible before anyone treats the data as evidence. A separate question is whether the file has changed since it was checked.
+**2:05–2:35 · Exports.** Download CSV and JSON. Show the JSON in an editor. “The export retains source columns and adds named review flags. The report records selected columns, thresholds, counts, timestamp assumptions and the original file's fingerprint.”
 
-## Start with a CSV
+**2:35–3:05 · Integrity.** Paste the visible digest, show match; change a character, show mismatch. “This compares the file bytes with a fingerprint from an earlier trusted record. It detects a difference from that baseline. It does not authenticate the sensor, and no blockchain anchoring is implemented.”
 
-Here is the running application. We can choose the built-in sample dataset or upload a CSV containing timestamps and measurements. For this demonstration, we use the included sample file. These are synthetic temperature readings, not a claim of field deployment.
+**3:05–3:35 · Evidence and next test.** Show repository and actual passing tests. “The public Python source includes regression tests for invalid values, time formats, duplicate records and fingerprint changes. This is a working proof of concept, not a validated monitoring deployment. The next step is to evaluate it with a real environmental team and labelled sensor data.”
 
-## Choose the fields
-
-After loading the file, the interface lets us select which columns represent time and the measured value. This makes the workflow usable with different column names. Timestamps are parsed into UTC, and readings are checked for valid numeric values.
-
-## See the quality summary
-
-The summary shows the number of records, the number of flagged records, and the percentage that passed these checks. That percentage describes this file under the selected rules. It is not a certification of measurement accuracy or environmental impact.
-
-## Inspect the time series
-
-The time-series chart makes it easy to see the unusually high sample reading alongside the surrounding observations. A visual spike is a reason to investigate. It could be a sensor issue, a data-entry issue, or a real event that should be retained.
-
-## Trace every flag
-
-The quality table preserves the original data and adds separate flags, so a reviewer can see why each row needs attention. The checks include invalid timestamps, missing or non-numeric readings, and duplicate timestamps. Every occurrence of a duplicated timestamp is marked.
-
-## Explain the anomaly rule
-
-Statistical outliers use a modified z-score based on the median absolute deviation, with a threshold of three point five. This is an explicit statistical rule, not a trained artificial intelligence model. The check is skipped when there are fewer than five finite readings, or the median absolute deviation is zero.
-
-## Add domain knowledge
-
-A reviewer can also enable a lower and upper plausibility bound. Those limits must make sense for the measurement type and unit. They are user-defined assumptions, and the report records them so someone else can understand the result.
-
-## Export the review
-
-The flagged CSV export keeps the source columns together with the check results. This supports a practical review process: inspect the suspect records, discuss them with the data owner, and document any corrections instead of silently removing unusual observations.
-
-## Fingerprint the original file
-
-The integrity section displays the SHA two fifty-six fingerprint of the exact original file bytes. We can enter an earlier trusted fingerprint here to check for a match or mismatch. Even a formatting change can produce a different fingerprint because the bytes are different.
-
-## Keep an auditable report
-
-The downloadable JSON report brings together the file name, fingerprint, record counts, flag counts, analysis method, and selected bounds. Its UTC generation time says when this report was created. It is not a trusted external timestamp or proof of when a sensor reading occurred.
-
-## Clear limits
-
-The prototype makes checks inspectable and produces a reproducible file fingerprint. It does not authenticate sensors, prove that measurements are true, or anchor records to a blockchain. Those limitations are stated in the application and documentation.
-
-## Review. Explain. Preserve.
-
-ClimateProof is built with Python, pandas, and Streamlit, and can run locally with no paid service. The repository includes the code, sample data, and setup instructions, so reviewers can reproduce the workflow themselves. Thank you for watching.
-
+Target 3:35, verify the recorded duration is between 3 and 5 minutes. Keep all limitations audible or visible. Upload only the actual completed recording; do not use the old OpportunityProof or SignalForge video.
